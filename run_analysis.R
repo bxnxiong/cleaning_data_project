@@ -11,7 +11,6 @@ test <- cbind(test_subject,test_y,test_x)
 names(test) <- c('subject','activity',as.character(features[,2]))
 #release some memories
 rm(test_x,test_y,test_subject)
-
 #head for larger training set
 setwd('..')
 setwd('./train')
@@ -23,11 +22,13 @@ names(train) <- c('subject','activity',as.character(features[,2]))
 #finally merge train and test datasets together,using rbind() method
 data <- rbind(test,train)
 rm(train_x,train_y,train_subject,test,train)
+
 ##task no.2
 #first we need to get col indexes of mean&std features,using grep()
 l <- c(1,2,grep('mean|std',names(data)))
 filtered <- data[,l]
 rm(data,l)
+
 ##task no.3
 data <- merge(filtered,activity,by.x = 'activity',by.y = 'V1',sort = F)
 #since after merging our new activity description is at the very end of the 82 variables,and
@@ -38,8 +39,10 @@ rm(filtered)
 #just to check if we missed out the first test subject
 table(grepl('^1$',data$subject))
 #the result for TRUE is not zero. So yeah,we're on the right track
+
 ##task no.4
 #seems we've already done that in task no.1
+
 ##task no.5
 library(dplyr)
 by_group <- group_by(data,subject,activity,add = T)
